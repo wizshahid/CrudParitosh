@@ -43,7 +43,7 @@ namespace ProductService.Infrastructure.Repositories
         {
             try
             {
-                await _context.ProductContainer.CreateItemAsync(product, new PartitionKey(product.id));
+                await _context.ProductContainer.CreateItemAsync(product, new PartitionKey(product.Id));
             }
             catch (Exception e)
             {
@@ -53,7 +53,7 @@ namespace ProductService.Infrastructure.Repositories
 
         public async Task UpdateProductAsync(Product product)
         {
-            await _context.ProductContainer.UpsertItemAsync(product, new PartitionKey(product.id));
+            await _context.ProductContainer.UpsertItemAsync(product, new PartitionKey(product.Id));
         }
 
         public async Task DeleteProductAsync(string id)

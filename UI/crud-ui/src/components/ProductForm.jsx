@@ -25,8 +25,12 @@ const ProductForm = () => {
   }, [id]);
 
   const loadProduct = async () => {
-    const result = await getProductById(id);
-    setProduct(result.data);
+    try {
+      const result = await getProductById(id);
+      setProduct(result.data);
+    } catch (e) {
+      alert(e);
+    }
   };
 
   const onInputChange = (e) => {

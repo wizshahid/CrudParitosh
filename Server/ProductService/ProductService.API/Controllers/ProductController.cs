@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ProductService.Application.Interfaces;
 using ProductService.Core.Models;
 
@@ -23,6 +24,7 @@ namespace ProductService.API.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<ActionResult<Product>> GetProductById(string id)
         {
             var product = await _productService.GetProductByIdAsync(id);
@@ -34,16 +36,18 @@ namespace ProductService.API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> AddProduct(Product product)
         {
             await _productService.AddProductAsync(product);
-            return CreatedAtAction(nameof(GetProductById), new { id = product.id }, product);
+            return CreatedAtAction(nameof(GetProductById), new { id = product.Id }, product);
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> UpdateProduct(string id, Product product)
         {
-            if (id != product.id)
+            if (id != product.Id)
             {
                 return BadRequest();
             }
@@ -59,6 +63,7 @@ namespace ProductService.API.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> DeleteProduct(string id)
         {
             var existingProduct = await _productService.GetProductByIdAsync(id);

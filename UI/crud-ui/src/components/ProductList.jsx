@@ -12,8 +12,12 @@ const ProductList = () => {
   const navigate = useNavigate();
 
   const loadProducts = async () => {
-    const result = await getProducts();
-    setProducts(result.data);
+    try {
+      const result = await getProducts();
+      setProducts(result.data);
+    } catch {
+      alert("Error");
+    }
   };
 
   const handleDelete = async (id) => {
@@ -44,7 +48,7 @@ const ProductList = () => {
               <td>
                 <button
                   onClick={() => {
-                    navigate("/edit-product/" + product.id);
+                    navigate("/products/edit/" + product.id);
                   }}
                   className="btn btn-primary"
                 >
