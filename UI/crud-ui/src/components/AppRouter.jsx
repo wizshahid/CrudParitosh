@@ -7,6 +7,7 @@ import RegisterPage from "./RegisterPage";
 import AllUsers from "./AllUsers";
 import PrivateRoute from "./PrivateRoute";
 import UnAuthorized from "./UnAuthorized";
+import MyOrders from "./MyOrders";
 const AppRouter = () => {
   return (
     <Routes>
@@ -47,6 +48,15 @@ const AppRouter = () => {
         element={
           <PrivateRoute allowedRoles={["Admin"]}>
             <AllUsers />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        exact
+        path="/myOrders"
+        element={
+          <PrivateRoute>
+            <MyOrders />
           </PrivateRoute>
         }
       />

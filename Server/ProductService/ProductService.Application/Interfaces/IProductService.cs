@@ -9,5 +9,6 @@ namespace ProductService.Application.Interfaces
         Task AddProductAsync(Product product);
         Task UpdateProductAsync(Product product);
         Task DeleteProductAsync(string id);
+        Task UpdateOrderCountAsync(string productId, int quantity);
     }
 }

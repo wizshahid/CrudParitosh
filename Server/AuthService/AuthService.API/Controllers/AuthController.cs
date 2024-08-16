@@ -16,7 +16,14 @@ public class AuthController : ControllerBase
 		this.service = service;
 	}
 
-	[HttpPost("register")]
+
+    [HttpGet("/")]
+    public IActionResult Welcome()
+    {
+        return Ok("Welcome to the Auth Service");
+    }
+
+    [HttpPost("register")]
 	[Authorize(Roles ="Admin")]
 	public async Task<IActionResult> Register([FromBody]RegisterUserRequest model)
 	{

@@ -1,23 +1,21 @@
-using ProductService.Application.Interfaces;
-using ProductService.Core.Interfaces;
-using ProductService.Infrastructure.Data;
-using ProductServiceClass = ProductService.Application.Services.ProductService;
-using ProductService.Infrastructure.Repositories;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using System.Text;
 using Azure.Messaging.ServiceBus;
-using ProductService.Application.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using OrderService.Application.Interfaces;
+using OrderService.Application.Services;
+using OrderService.Core.Interfaces;
+using OrderService.Infra.Data;
+using OrderService.Infra.Repositories;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
-
 builder.Services.AddSingleton<CosmosDbContext>();
-builder.Services.AddScoped<IProductRepository, ProductRepository>();
-builder.Services.AddScoped<IProductService, ProductServiceClass>();
+builder.Services.AddScoped<IOrdersService, OrdersService>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -32,16 +30,13 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-builder.Services.AddAuthorization();
-
 //builder.Services.AddSingleton(new ServiceBusClient(builder.Configuration["AzureServiceBus:ConnectionString"]));
-//builder.Services.AddHostedService<EventBackgroundService>();
+//builder.Services.AddHostedService<ProductNameUpdateBackgroundService>();
 
-
-
+builder.Services.AddAuthorization();
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
 
 var app = builder.Build();
 

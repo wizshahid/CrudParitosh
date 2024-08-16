@@ -19,6 +19,9 @@ builder.Services.AddOcelot();
 var app = builder.Build();
 
 app.UseCors("CorsPolicy");
+
+app.MapGet("/", () => "Welcome to the API Gateway");
+
 await app.UseOcelot();
 
 app.Run();

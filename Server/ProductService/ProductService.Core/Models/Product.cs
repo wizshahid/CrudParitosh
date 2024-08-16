@@ -12,4 +12,5 @@ public class Product
     public string Category { get; set; } = null!;
     public int StockQuantity { get; set; }
     public string Manufacturer { get; set; } = null!;
+    public int OrderCount { get; set; }
 }

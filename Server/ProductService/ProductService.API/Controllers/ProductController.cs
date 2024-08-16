@@ -16,6 +16,12 @@ namespace ProductService.API.Controllers
             _productService = productService;
         }
 
+        [HttpGet("/")]
+        public IActionResult Welcome()
+        {
+            return Ok("Welcome to the Product Service");
+        }
+
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
         {

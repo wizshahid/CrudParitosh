@@ -25,6 +25,18 @@
       "UpstreamHttpMethod": [ "Get", "Put", "Delete" ]
     },
     {
+      "DownstreamPathTemplate": "/api/order/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7172
+        }
+      ],
+      "UpstreamPathTemplate": "/api/orders/{everything}",
+      "UpstreamHttpMethod": [ "Post", "Get" ]
+    },
+    {
       "DownstreamPathTemplate": "/api/auth/{everything}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
@@ -35,9 +47,21 @@
       ],
       "UpstreamPathTemplate": "/api/auth/{everything}",
       "UpstreamHttpMethod": [ "Post", "Get" ]
+    },
+    {
+      "DownstreamPathTemplate": "/",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7030
+        }
+      ],
+      "UpstreamPathTemplate": "/api/authtest",
+      "UpstreamHttpMethod": [ "Post", "Get" ]
     }
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "https://localhost:5000"
+    "BaseUrl": "https://localhost:7268"
   }
 }

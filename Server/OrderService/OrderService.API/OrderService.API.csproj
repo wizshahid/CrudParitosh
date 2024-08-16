@@ -7,18 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Ocelot" Version="23.3.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.33" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Update="ocelot.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <ProjectReference Include="..\OrderService.Application\OrderService.Application.csproj" />
+    <ProjectReference Include="..\OrderService.Infra\OrderService.Infra.csproj" />
   </ItemGroup>
 
 </Project>
