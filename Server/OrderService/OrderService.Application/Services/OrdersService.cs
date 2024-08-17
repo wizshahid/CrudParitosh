@@ -12,10 +12,10 @@ public class OrdersService : IOrdersService
     private readonly ServiceBusClient _serviceBusClient;
     private readonly string orderCountUpdateQueueName;
 
-    public OrdersService(IOrderRepository orderRepository, /*ServiceBusClient serviceBusClient,*/ IConfiguration configuration)
+    public OrdersService(IOrderRepository orderRepository, ServiceBusClient serviceBusClient, IConfiguration configuration)
     {
         _orderRepository = orderRepository;
-        //_serviceBusClient = serviceBusClient;
+        _serviceBusClient = serviceBusClient;
         orderCountUpdateQueueName = configuration["AzureServiceBus:OrderCountUpdateQueueName"]!;
     }
 
@@ -23,7 +23,7 @@ public class OrdersService : IOrdersService
     {
         var createdOrder = await _orderRepository.CreateOrderAsync(order);
 
-        //await SendMessageToUpdateOrderCountAsync(order.ProductId, order.Quantity);
+        await SendMessageToUpdateOrderCountAsync(order.ProductId, order.Quantity);
 
         return createdOrder;
     }

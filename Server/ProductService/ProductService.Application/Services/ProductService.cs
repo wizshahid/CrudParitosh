@@ -13,10 +13,10 @@ namespace ProductService.Application.Services
         private readonly ServiceBusClient _serviceBusClient;
         private readonly string productNameUpdateQueueName;
 
-        public ProductService(IProductRepository productRepository, /*ServiceBusClient serviceBusClient,*/ IConfiguration configuration)
+        public ProductService(IProductRepository productRepository, ServiceBusClient serviceBusClient, IConfiguration configuration)
         {
             _productRepository = productRepository;
-            //_serviceBusClient = serviceBusClient;
+            _serviceBusClient = serviceBusClient;
             productNameUpdateQueueName = configuration["AzureServiceBus:ProductNameUpdateQueueName"]!;
         }
 
@@ -42,7 +42,7 @@ namespace ProductService.Application.Services
 
             if (product.Name != existingProduct.Name)
             {
-                //await SendMessageToOrderServiceAsync(product.Id, product.Name);
+                await SendMessageToOrderServiceAsync(product.Id, product.Name);
             }
             await _productRepository.UpdateProductAsync(product);
         }
