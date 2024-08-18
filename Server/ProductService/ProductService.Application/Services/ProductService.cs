@@ -11,13 +11,13 @@ namespace ProductService.Application.Services
     {
         private readonly IProductRepository _productRepository;
         private readonly ServiceBusClient _serviceBusClient;
-        private readonly string productNameUpdateQueueName;
+        private readonly string productNameUpdateTopicName;
 
         public ProductService(IProductRepository productRepository, ServiceBusClient serviceBusClient, IConfiguration configuration)
         {
             _productRepository = productRepository;
             _serviceBusClient = serviceBusClient;
-            productNameUpdateQueueName = configuration["AzureServiceBus:ProductNameUpdateQueueName"]!;
+            productNameUpdateTopicName = configuration["AzureServiceBus:ProductNameUpdateTopicName"]!;
         }
 
         public async Task<IEnumerable<Product>> GetProductsAsync()
@@ -57,10 +57,11 @@ namespace ProductService.Application.Services
 
             var messageBody = JsonConvert.SerializeObject(messagePayload);
             var message = new ServiceBusMessage(messageBody);
-
-            var sender = _serviceBusClient.CreateSender(productNameUpdateQueueName);
+            var sender = _serviceBusClient.CreateSender(productNameUpdateTopicName);
             await sender.SendMessageAsync(message);
+            await sender.DisposeAsync();
         }
+
 
         public async Task DeleteProductAsync(string id)
         {

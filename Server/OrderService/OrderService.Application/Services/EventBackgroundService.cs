@@ -17,11 +17,15 @@ namespace OrderService.Application.Services
         {
             _serviceProvider = serviceProvider;
             _serviceBusClient = new ServiceBusClient(configuration["AzureServiceBus:ConnectionString"]);
-            _serviceBusProcessor = _serviceBusClient.CreateProcessor(configuration["AzureServiceBus:ProductNameUpdateQueueName"], new ServiceBusProcessorOptions
-            {
-                MaxConcurrentCalls = 1,
-                AutoCompleteMessages = false
-            });
+
+            _serviceBusProcessor = _serviceBusClient.CreateProcessor(
+                topicName: configuration["AzureServiceBus:ProductNameUpdateTopicName"],
+                subscriptionName: configuration["AzureServiceBus:SubscriptionName"],
+                new ServiceBusProcessorOptions
+                {
+                    MaxConcurrentCalls = 1,
+                    AutoCompleteMessages = false
+                });
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
